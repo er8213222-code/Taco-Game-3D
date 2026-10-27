@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TacoGame 3D · Prototipo</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#122235;color:white;font-family:system-ui,Arial,sans-serif;overflow:hidden}canvas{display:block}
+#hud{position:fixed;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;gap:10px;pointer-events:none}.panel{background:#071528d9;border:1px solid #ffffff44;border-radius:13px;padding:11px;max-width:75%}
+#notice{position:fixed;top:98px;left:50%;transform:translateX(-50%);background:#071528df;border-radius:10px;padding:8px 12px;text-align:center;font-size:13px;width:max-content;max-width:90%}
+#buttons{position:fixed;bottom:78px;left:8px;right:8px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap}button{background:#1c466e;border:1px solid #ffffff55;border-radius:10px;padding:12px 10px;color:white;font-weight:700;cursor:pointer}button:active{transform:scale(.97)}button.primary{background:#bd6014}
+#apron{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:205px;height:74px;background:#15528d;border:4px solid #0c3969;border-bottom:0;border-radius:50% 50% 0 0;text-align:center;padding-top:26px;font-weight:900;font-size:13px;pointer-events:none}
+@media(max-width:540px){button{font-size:12px;padding:10px 7px}.panel{font-size:12px;padding:9px}#notice{top:91px}}
+</style>
+</head>
+<body>
+<div id="hud"><div class="panel"><strong>🌮 TacoGame 3D</strong><div id="order">Preparando pedido...</div></div><div class="panel">🪙 <span id="coins">0</span> · ⭐ <span id="served">0</span></div></div>
+<div id="notice">¡Calienta una tortilla para comenzar!</div>
+<div id="buttons">
+<button data-action="heat">🔥 Tortilla</button><button data-action="meat">🥩 Carne</button><button data-action="cilantro">🌿 Cilantro</button><button data-action="onion">🧅 Cebolla</button><button data-action="salsa">🌶️ Salsa</button><button class="primary" data-action="serve">✅ Entregar</button>
+</div><div id="apron">EL TACONAZO</div>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x8bc9ee);
+const camera=new THREE.PerspectiveCamera(65,innerWidth/innerHeight,.1,100);camera.position.set(0,1.7,3.6);camera.lookAt(0,1.05,-.5);
+const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);document.body.prepend(renderer.domElement);
+scene.add(new THREE.HemisphereLight(0xffffff,0x88603c,2.1));const light=new THREE.DirectionalLight(0xffffff,2);light.position.set(-3,7,4);scene.add(light);
+function box(x,y,z,w,h,d,color){const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshStandardMaterial({color}));o.position.set(x,y,z);scene.add(o);return o}
+function disk(x,y,z,r,h,color){const o=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,32),new THREE.MeshStandardMaterial({color}));o.position.set(x,y,z);scene.add(o);return o}
+box(0,-.1,0,18,.2,18,0xc78c54);box(0,.55,-.6,3.8,.95,1.3,0xc44e24);box(0,1.08,-.6,4,.12,1.5,0xbababa);
+for(const x of [-1.9,1.9])box(x,2,-.6,.09,2.1,.09,0x86532d);
+box(0,3.08,-.6,4.2,.18,1.9,0xe9a629);
+for(let i=0;i<9;i++)box(-1.8+i*.45,3.15,.25,.24,.09,.18,[0xd44d2d,0xf3c844,0x21894d][i%3]);
+disk(-.75,1.2,-.6,.52,.09,0x292c30);disk(.72,1.2,-.6,.48,.08,0xe7d4b7);
+for(const [x,color] of [[-1.65,0x914323],[-1.3,0x238a3b],[1.4,0xe4dfbb],[1.72,0xb52820]])disk(x,1.22,.04,.15,.18,color);
+const orderEl=document.querySelector('#order'),noticeEl=document.querySelector('#notice'),coinsEl=document.querySelector('#coins'),servedEl=document.querySelector('#served');
+let tortilla=null,pieces=[],added=[],order=[],coins=0,served=0;
+function tell(t){noticeEl.textContent=t}
+function nextOrder(){const opts=[['meat','cilantro','onion'],['meat','cilantro'],['meat','onion','salsa'],['meat','cilantro','onion','salsa']];order=opts[Math.floor(Math.random()*opts.length)];const names={meat:'carne',cilantro:'cilantro',onion:'cebolla',salsa:'salsa'};orderEl.textContent='Pedido: '+order.map(x=>names[x]).join(', ')}
+function sprinkle(color){for(let i=0;i<14;i++){const p=new THREE.Mesh(new THREE.SphereGeometry(.032,7,6),new THREE.MeshStandardMaterial({color}));const angle=Math.random()*Math.PI*2,rad=Math.sqrt(Math.random())*.28;p.position.set(.72+Math.cos(angle)*rad,1.29+added.length*.014,-.6+Math.sin(angle)*rad);scene.add(p);pieces.push(p)}}
+function act(action){
+if(action==='heat'){if(tortilla)scene.remove(tortilla);pieces.forEach(p=>scene.remove(p));pieces=[];added=[];tortilla=disk(.72,1.29,-.6,.33,.025,0xf3cc7d);tell('¡Tortilla lista! Agrega carne.');return}
+if(action==='serve'){if(!tortilla){tell('Primero calienta una tortilla.');return}const correct=order.every(x=>added.includes(x))&&added.every(x=>order.includes(x));if(correct){coins+=10;served++;tell('¡Pedido correcto! +10 monedas 🎉')}else tell('Ese taco no coincide con el pedido.');coinsEl.textContent=coins;servedEl.textContent=served;scene.remove(tortilla);tortilla=null;pieces.forEach(p=>scene.remove(p));pieces=[];added=[];nextOrder();return}
+if(!tortilla){tell('Primero calienta una tortilla.');return}if(added.includes(action)){tell('Ese ingrediente ya está puesto.');return}if(action!=='meat'&&!added.includes('meat')){tell('Primero agrega carne.');return}added.push(action);sprinkle(({meat:0x824022,cilantro:0x238b38,onion:0xf3e9c8,salsa:0xb51f16})[action]);tell('Agregaste '+({meat:'carne',cilantro:'cilantro',onion:'cebolla',salsa:'salsa'})[action]);}
+document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>act(b.dataset.action)));
+nextOrder();function render(){requestAnimationFrame(render);renderer.render(scene,camera)}render();addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+</script>
+</body></html>
