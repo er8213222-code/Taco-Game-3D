@@ -41,12 +41,12 @@ const group=new THREE.Group();
 function part(geometry,color,x,y,z){const mesh=new THREE.Mesh(geometry,new THREE.MeshStandardMaterial({color}));mesh.position.set(x,y,z);group.add(mesh);return mesh}
 part(new THREE.BoxGeometry(.52,.75,.28),0x2d79a5,0,1.05,0);
 part(new THREE.SphereGeometry(.23,18,12),0xe4a36b,0,1.65,0);
-part(new THREE.BoxGeometry(.19,.62,.2),0x263e63,-.16,.36,0);
-part(new THREE.BoxGeometry(.19,.62,.2),0x263e63,.16,.36,0);
-part(new THREE.BoxGeometry(.14,.6,.18),0xe4a36b,-.34,1.1,0);
-part(new THREE.BoxGeometry(.14,.6,.18),0xe4a36b,.34,1.1,0);
+const leftLeg=part(new THREE.BoxGeometry(.19,.62,.2),0x263e63,-.16,.36,0);
+const rightLeg=part(new THREE.BoxGeometry(.19,.62,.2),0x263e63,.16,.36,0);
+const leftArm=part(new THREE.BoxGeometry(.14,.6,.18),0xe4a36b,-.34,1.1,0);
+const rightArm=part(new THREE.BoxGeometry(.14,.6,.18),0xe4a36b,.34,1.1,0);
 for(const x of [-.09,.09])part(new THREE.SphereGeometry(.024,8,8),0x222222,x,1.69,.213);
-const mouth=part(new THREE.BoxGeometry(.15,.025,.015),0x652d24,0,1.55,.224);group.userData.mouth=mouth;
+const mouth=part(new THREE.BoxGeometry(.15,.025,.015),0x652d24,0,1.55,.224);group.userData={mouth,leftLeg,rightLeg,leftArm,rightArm};
 group.position.set(0,0,-2.6);scene.add(group);return group;
 }
 function clearTaco(){if(tortilla){scene.remove(tortilla);tortilla=null}pieces.forEach(p=>scene.remove(p));pieces=[];added=[]}
@@ -69,6 +69,6 @@ if(action!=='meat'&&!added.includes('meat')){tell('Primero agrega carne.');retur
 added.push(action);sprinkle(({meat:0x824022,cilantro:0x238b38,onion:0xf3e9c8,salsa:0xb51f16})[action]);tell('Agregaste '+names[action]);
 }
 document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>act(b.dataset.action)));
-function render(){requestAnimationFrame(render);if(playing){const remaining=Math.max(0,(deadline-performance.now())/1000);timerEl.textContent=remaining.toFixed(1);timerEl.classList.toggle('urgent',remaining<=5);if(!leaving&&remaining<=0)loseCustomer();if(customer){const target=leaving?-2.5:0;customer.position.x+=(target-customer.position.x)*.055;}}renderer.render(scene,camera)}render();addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+function render(){requestAnimationFrame(render);if(playing){const remaining=Math.max(0,(deadline-performance.now())/1000);timerEl.textContent=remaining.toFixed(1);timerEl.classList.toggle('urgent',remaining<=5);if(!leaving&&remaining<=0)loseCustomer();if(customer){const target=leaving?-2.5:0;customer.position.x+=(target-customer.position.x)*.055;const walking=Math.abs(target-customer.position.x)>.035;const swing=walking?Math.sin(performance.now()*.013)*.42:0;customer.userData.leftLeg.rotation.x=swing;customer.userData.rightLeg.rotation.x=-swing;customer.userData.leftArm.rotation.x=-swing*.7;customer.userData.rightArm.rotation.x=swing*.7;customer.position.y=walking?Math.abs(Math.sin(performance.now()*.013))*.025:0;}}renderer.render(scene,camera)}render();addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
 </script>
 </body></html>
