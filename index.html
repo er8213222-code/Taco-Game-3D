@@ -19,6 +19,11 @@
 #buttons,#buttons.open{display:none!important}
 #stationTitle{top:5px!important}
 #notice{bottom:12px!important;max-width:42vw!important;font-size:12px!important;background:#3b1c19e6!important}
+
+/* Mensajes breves en una esquina. Evitar que las reglas de pantalla horizontal
+   definan top y bottom a la vez y estiren el aviso a toda la altura. */
+#notice{position:fixed!important;top:auto!important;bottom:10px!important;left:10px!important;right:auto!important;transform:none!important;width:max-content!important;max-width:min(350px,40vw)!important;height:auto!important;min-height:0!important;max-height:none!important;padding:6px 10px!important;margin:0!important;border:1px solid #e2af79!important;border-radius:9px!important;line-height:1.3!important;text-align:left!important;font-size:clamp(10px,1.2vw,13px)!important;background:#3b1c19e8!important;color:#fff!important;z-index:6;pointer-events:none!important;transition:opacity .18s ease}
+@media(max-width:640px){#notice{max-width:46vw!important;bottom:8px!important;font-size:11px!important}}
 </style>
 </head>
 <body>
@@ -107,7 +112,7 @@ function chopVisual(){const portion=[];for(let i=0;i<9;i++){const p=box(1.2+Math
 function useChoppedOnion(){const portion=choppedOnionPieces.shift();if(portion)for(const p of portion){if(p&&p.parent)p.parent.remove(p)}}
 
 const names={meat:'carne',cilantro:'cilantro',onion:'cebolla',salsa:'salsa'};
-let noticeTimer=null;function tell(t){noticeEl.textContent=t;noticeEl.style.opacity='1';if(noticeTimer)clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>{noticeEl.style.opacity='0';noticeEl.style.pointerEvents='none'},2400)}
+let noticeTimer=null;function tell(t){noticeEl.textContent=t;noticeEl.style.opacity='1';if(noticeTimer)clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>{noticeEl.style.opacity='0';noticeEl.style.pointerEvents='none'},1700)}
 function makeCustomer(){
 const group=new THREE.Group();
 function part(geometry,color,x,y,z){const mesh=new THREE.Mesh(geometry,new THREE.MeshStandardMaterial({color}));mesh.position.set(x,y,z);group.add(mesh);return mesh}
@@ -216,7 +221,7 @@ if(correct){tacosDone++;if(tacosDone<orderCount){tell('¡Taco '+tacosDone+' de '
 else{tell('Pedido incorrecto. Rehaz el taco.');clearTaco();setStation(0)}
 return}
 if(stage!=='plate'){tell('Primero calienta la tortilla y pásala al plato.');setStation(0);return}
-if(added.includes(action)){tell('Ese ingrediente ya está puesto.');return}const targetStop={meat:-.28,cilantro:.48,onion:1.22,salsa:1.96}[action];if(targetStop!==undefined&&Math.abs(conveyorX-targetStop)>.12){tell('Mueve la cinta con las flechas hasta '+names[action]+'.');return}if(action==='onion'&&onionStock===0){tell('🧅 No queda cebolla. ¡Pica más!');return}
+if(added.includes(action)){tell('Ese ingrediente ya está puesto.');return}const dispenserForAction=dispensers.find(d=>d.action===action);const targetStop=dispenserForAction?.x;if(targetStop!==undefined&&Math.abs(conveyorX-targetStop)>.12){tell('Usa las flechas para llevar el taco hasta '+names[action]+'.');return}if(action==='onion'&&onionStock===0){tell('🧅 No queda cebolla. ¡Pica más!');return}
 if(action!=='meat'&&!added.includes('meat')){tell('Primero agrega carne.');return}
 if(action==='onion'){onionStock--;useChoppedOnion()}hands();added.push(action);sprinkle(({meat:0x824022,cilantro:0x238b38,onion:0xf3e9c8,salsa:0xb51f16})[action],action);tell('Agregaste '+names[action]);
 }
