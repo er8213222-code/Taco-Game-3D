@@ -133,7 +133,7 @@ for(const [x,color] of [[-2.55,0x456a9c],[2.55,0x8b4a77]]){const seated=new THRE
 function clearTaco(){if(tortilla){scene.remove(tortilla);tortilla=null}stage='none';conveyorX=-1.95;transferring=false;pieces.forEach(p=>scene.remove(p));pieces=[];falling.length=0;added=[]}
 function nextOrder(){clearTaco();setStation(0);const opts=[['meat','cilantro','onion'],['meat','cilantro'],['meat','onion','salsa'],['meat','cilantro','onion','salsa']];order=opts[Math.floor(Math.random()*opts.length)];orderCount=limit===90?1:limit===65?1+Math.floor(Math.random()*3):2+Math.floor(Math.random()*4);tacosDone=0;onionStock=limit===90?99:limit===65?4:0;orderEl.textContent='Pedido: '+orderCount+' taco(s) de '+order.map(x=>names[x]).join(', ');if(customer)scene.remove(customer);customer=makeCustomer();customer.position.x=2.5;customer.position.z=-2.8;deadline=performance.now()+limit*1000;leaving=false}
 function loseCustomer(){if(leaving)return;leaving=true;lost++;lostEl.textContent=lost;tell('😡 ¡El cliente se enojó y se fue sin pagar!');customer.userData.mouth.scale.y=4;setTimeout(()=>{if(!playing)return;nextOrder();tell('¡Llegó otro cliente! Prepara su pedido.')},1100)}
-document.querySelectorAll('[data-difficulty]').forEach(b=>b.addEventListener('click',()=>{limit=Number(b.dataset.difficulty);document.querySelector('#setup').style.display='none';playing=true;nextOrder();tvControls.style.display='none';if(tvVideo.src)tvVideo.play().catch(()=>{});tell('Empieza tocando el botón verde TORTILLA de abajo.')}));
+document.querySelectorAll('[data-difficulty]').forEach(b=>b.addEventListener('click',()=>{limit=Number(b.dataset.difficulty);document.querySelector('#setup').style.display='none';playing=true;nextOrder();tvControls.style.display='none';if(tvVideo.src){tvVideo.muted=false;tvMute.textContent='🔊';tvVideo.play().catch(()=>{tvVideo.muted=true;tvMute.textContent='🔇';tvVideo.play().catch(()=>{})})}tell('Empieza tocando TORTILLA en la parte inferior del carrito.')}));
 // Barras de acero de montaje de los dispensadores, sujetas al fondo del carrito.
 box(0,2.14,-1.25,5.25,.24,.13,0x86979f);
 for(const x of [-2.45,2.45])box(x,2.34,-1.25,.14,.48,.14,0xb0bbc0);
@@ -190,6 +190,8 @@ renderer.domElement.addEventListener('pointerup',e=>{
  if(!playing||leaving)return;
  mouse.set(e.clientX/innerWidth*2-1,-e.clientY/innerHeight*2+1);
  raycaster.setFromCamera(mouse,camera);
+ // La pantalla misma es un interruptor de sonido, sin botones flotantes.
+ if(raycaster.intersectObject(tvScreen).length){if(!tvVideo.src){tell('La televisión espera el video.');return}tvVideo.muted=!tvVideo.muted;tvMute.textContent=tvVideo.muted?'🔇':'🔊';if(tvVideo.paused)tvVideo.play().catch(()=>{});tell(tvVideo.muted?'Televisión sin sonido':'Sonido de la televisión activado');return}
  const hits=raycaster.intersectObjects(wallButtons.flatMap(b=>[b.hit,b.base,b.face,b.plate]));
  if(!hits.length)return;
  const selected=wallButtons.find(b=>[b.hit,b.base,b.face,b.plate].includes(hits[0].object));
