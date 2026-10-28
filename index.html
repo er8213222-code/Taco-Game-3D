@@ -41,10 +41,11 @@ box(0,1.12,-4.95,13,.22,.055,0xf1c329);
 box(0,1.27,-4.95,13,.08,.07,0x242424);
 box(0,.53,-4.95,13,1,.08,0xb72e26);
 // La misma franja roja, amarilla y negra en las tres paredes.
-for(const x of [-5.08,5.08]){
-box(x,.53,-.9,.075,1,8.35,0xb72e26);
-box(x,1.12,-.9,.08,.22,8.35,0xf1c329);
-box(x,1.27,-.9,.08,.08,8.35,0x242424);
+for(const x of [-5.06,5.06]){
+// Extender la decoración por las caras interiores completas, visibles desde el jugador.
+box(x,.82,-.9,.13,1.65,8.8,0xb72e26);
+box(x,1.72,-.9,.14,.24,8.8,0xf1c329);
+box(x,1.87,-.9,.14,.09,8.8,0x242424);
 }
 for(let i=-4;i<=4;i++)box(i*1.05,-.004,-1.5,.025,.006,8,0x8c8176);
 for(let j=-4;j<=2;j++)box(0,-.002,j*.95,11,.006,.025,0x8c8176);
@@ -59,11 +60,11 @@ const tvTexture=new THREE.VideoTexture(tvVideo);tvTexture.colorSpace=THREE.SRGBC
 tvScreen.material=new THREE.MeshBasicMaterial({map:tvTexture,color:0xffffff,side:THREE.DoubleSide});
 let localVideoUrl=null;
 const tvFile=document.querySelector('#tvFile'),tvMute=document.querySelector('#tvMute');
-tvFile.addEventListener('change',()=>{const file=tvFile.files&&tvFile.files[0];if(!file)return;if(localVideoUrl)URL.revokeObjectURL(localVideoUrl);localVideoUrl=URL.createObjectURL(file);tvVideo.src=localVideoUrl;tvVideo.play().catch(()=>{});});
+tvFile.addEventListener('change',()=>{const file=tvFile.files&&tvFile.files[0];if(!file)return;if(localVideoUrl)URL.revokeObjectURL(localVideoUrl);localVideoUrl=URL.createObjectURL(file);tvVideo.src=localVideoUrl;tvVideo.play().catch(()=>{document.querySelector('#notice').textContent='Toca Jugar para activar el video de la televisión';});});
 tvMute.addEventListener('click',()=>{tvVideo.muted=!tvVideo.muted;tvMute.textContent=tvVideo.muted?'🔇':'🔊';if(tvVideo.paused)tvVideo.play().catch(()=>{})});
-tvScreen.rotation.y=Math.PI; // visible desde el interior de la taquería
+tvScreen.rotation.y=0; // la cara frontal apunta hacia el jugador
 // Cuando se suba tv-taconazo.mp4 al repositorio se cargará automáticamente.
-fetch('./tv-taconazo.mp4',{method:'HEAD'}).then(r=>{if(r.ok&&!tvVideo.src){tvVideo.src='./tv-taconazo.mp4';tvVideo.muted=true;tvMute.textContent='🔇'}}).catch(()=>{});
+fetch('./tv-taconazo.mp4',{method:'HEAD'}).then(r=>{if(r.ok&&!tvVideo.src){tvVideo.src='./tv-taconazo.mp4';tvVideo.muted=true;tvMute.textContent='🔇';tvVideo.play().catch(()=>{})}}).catch(()=>{});
 // Ventana del carrito y su estructura metálica.
 for(const x of [-2.05,2.05])box(x,2.15,-1.35,.12,2.4,.12,0x383c41);
 box(0,3.3,-1.35,4.3,.15,.16,0x303438);
