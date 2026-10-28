@@ -12,7 +12,7 @@
 @media(max-width:700px){button{font-size:12px;padding:9px 7px}.panel{font-size:12px;padding:8px}#notice{top:94px}#hint{display:none}#movePad{bottom:184px;left:8px;grid-template-columns:repeat(3,38px)}#movePad button{min-height:38px}#lookPad{bottom:184px;right:8px}#lookPad button{padding:8px}#buttons{bottom:76px;max-height:92px}#apron{width:150px;height:55px;padding-top:18px;font-size:10px}}
 #movePad,#lookPad{display:none!important}#joystick{position:fixed;left:17px;bottom:105px;width:112px;height:112px;border-radius:50%;border:2px solid #ffffff55;background:#132a4499;touch-action:none;z-index:5}#stick{position:absolute;width:48px;height:48px;left:30px;top:30px;border-radius:50%;background:#d9e5f4aa;border:2px solid white;pointer-events:none}#actionToggle{position:fixed;right:15px;bottom:118px;z-index:7;border-radius:30px;padding:13px 17px;background:#c46d22}#buttons{display:none;bottom:184px;left:auto;right:10px;width:min(245px,60vw);max-height:45vh;overflow:auto;justify-content:flex-end;background:#071528c9;border-radius:15px;padding:8px;z-index:6}#buttons.open{display:flex}#buttons button{font-size:11px;padding:8px 9px}canvas{touch-action:none}@media(max-width:700px){#joystick{bottom:98px}#actionToggle{bottom:112px}#buttons{bottom:175px}}
 #joystick,#actionToggle,#movePad,#lookPad{display:none!important}#buttons,#buttons.open{display:flex!important;position:fixed;bottom:22px;left:50%;right:auto;transform:translateX(-50%);width:min(94vw,650px);max-height:none;overflow:visible;justify-content:center;background:#0b1b2acb;padding:10px;border-radius:16px;z-index:8}#buttons button{display:none;font-size:clamp(13px,2vw,18px);padding:13px 17px}#buttons button.station-active{display:inline-block}#buttons,#buttons.open{background:linear-gradient(145deg,#871d1b,#c63828)!important;border:3px solid #f1b46c;box-shadow:0 6px 22px #25070788}#buttons button.station-active{background:#fff0d7!important;color:#681a15!important;border:2px solid #e1a75a;border-radius:10px}#stationTitle{background:#851d1de8!important;border:2px solid #e4a55e}#order{color:#fff}#stationTitle{position:fixed;top:19%;left:50%;transform:translateX(-50%);z-index:7;background:#102439dc;color:white;padding:10px 18px;border-radius:14px;font-weight:bold;text-align:center;pointer-events:none}#apron{display:none!important}
-#hud{top:8px;left:8px;right:8px}#hud .panel{background:#3b1c19dd;border:1px solid #f2bf83;font-size:clamp(11px,1.6vw,16px);padding:7px 11px}#hint{display:none}#stationTitle{top:18%;font-size:clamp(12px,1.8vw,17px);padding:7px 14px}#notice{top:29%;font-size:clamp(11px,1.5vw,15px)}#buttons,#buttons.open{bottom:max(10px,env(safe-area-inset-bottom));width:min(95vw,730px);padding:8px;gap:7px}#buttons button.station-active{min-height:49px;padding:10px 13px;font-size:clamp(12px,2.3vw,17px);flex:1 1 auto}#buttons,#buttons.open{width:max-content!important;max-width:94vw!important;border-width:2px!important;padding:5px 7px!important;gap:5px!important;border-radius:13px!important;box-shadow:0 4px 12px #25070766!important}#buttons button.station-active{flex:0 1 auto!important;min-height:42px!important;padding:8px 12px!important;font-size:clamp(11px,1.7vw,15px)!important;white-space:nowrap;border-radius:9px!important}#stationTitle{top:17%!important;opacity:.91}#setup .dialog{background:#6d201e;border:2px solid #e4a55e}#setup button{background:#f8e9c8;color:#61251c;border:2px solid #dfa45f}@media(max-width:520px){#buttons button.station-active{padding:8px 7px!important;font-size:11px!important}#buttons,#buttons.open{gap:3px!important}}@media(max-height:460px){#stationTitle{top:16%}#notice{top:30%}#buttons button.station-active{min-height:42px;padding:7px 10px}#hud .panel{font-size:12px}}
+#hud{top:8px;left:8px;right:8px}#hud .panel{background:#3b1c19dd;border:1px solid #f2bf83;font-size:clamp(11px,1.6vw,16px);padding:7px 11px}#hint{display:none}#stationTitle{top:6px;left:50%;font-size:clamp(10px,1.3vw,13px);padding:4px 8px;opacity:.65}#notice{top:auto;bottom:75px;left:12px;transform:none;max-width:36vw;font-size:clamp(10px,1.3vw,13px);pointer-events:none}#buttons,#buttons.open{bottom:max(10px,env(safe-area-inset-bottom));width:min(95vw,730px);padding:8px;gap:7px}#buttons button.station-active{min-height:49px;padding:10px 13px;font-size:clamp(12px,2.3vw,17px);flex:1 1 auto}#buttons,#buttons.open{width:max-content!important;max-width:94vw!important;border-width:2px!important;padding:5px 7px!important;gap:5px!important;border-radius:13px!important;box-shadow:0 4px 12px #25070766!important}#buttons button.station-active{flex:0 1 auto!important;min-height:42px!important;padding:8px 12px!important;font-size:clamp(11px,1.7vw,15px)!important;white-space:nowrap;border-radius:9px!important}#stationTitle{top:17%!important;opacity:.91}#setup .dialog{background:#6d201e;border:2px solid #e4a55e}#setup button{background:#f8e9c8;color:#61251c;border:2px solid #dfa45f}@media(max-width:520px){#buttons button.station-active{padding:8px 7px!important;font-size:11px!important}#buttons,#buttons.open{gap:3px!important}}@media(max-height:460px){#stationTitle{top:16%}#notice{top:30%}#buttons button.station-active{min-height:42px;padding:7px 10px}#hud .panel{font-size:12px}}
 #buttons button.station-active[data-action="meat"],#buttons button.station-active[data-action="cilantro"],#buttons button.station-active[data-action="onion"],#buttons button.station-active[data-action="salsa"]{font-size:11px!important;padding:6px 8px!important}#tvControls{position:fixed;top:73px;right:10px;z-index:9;display:flex;gap:5px;align-items:center;padding:5px 7px;background:#3b1c19db;border:1px solid #e4a55e;border-radius:9px;font-size:11px}#tvControls label{cursor:pointer;white-space:nowrap}#tvControls input{width:105px;font-size:10px;color:white}#tvControls button{font-size:13px;padding:5px 7px;background:#7b2821}@media(max-height:480px){#tvControls{top:56px;right:8px;font-size:10px}#tvControls input{width:90px}}
 </style>
 </head>
@@ -64,7 +64,7 @@ tvFile.addEventListener('change',()=>{const file=tvFile.files&&tvFile.files[0];i
 tvMute.addEventListener('click',()=>{tvVideo.muted=!tvVideo.muted;tvMute.textContent=tvVideo.muted?'🔇':'🔊';if(tvVideo.paused)tvVideo.play().catch(()=>{})});
 tvScreen.rotation.y=0; // la cara frontal apunta hacia el jugador
 // Cuando se suba tv-taconazo.mp4 al repositorio se cargará automáticamente.
-fetch('./tv-taconazo.mp4',{method:'HEAD'}).then(r=>{if(r.ok&&!tvVideo.src){tvVideo.src='./tv-taconazo.mp4';tvVideo.muted=true;tvMute.textContent='🔇';tvVideo.play().catch(()=>{})}}).catch(()=>{});
+fetch('./tv-taconazo.mp4',{method:'HEAD'}).then(r=>{if(r.ok&&!tvVideo.src){tvVideo.src='./tv-taconazo.mp4';tvVideo.muted=true;tvMute.textContent='🔇';if(playing)tvVideo.play().catch(()=>{})}}).catch(()=>{});
 // Ventana del carrito y su estructura metálica.
 for(const x of [-2.05,2.05])box(x,2.15,-1.35,.12,2.4,.12,0x383c41);
 box(0,3.3,-1.35,4.3,.15,.16,0x303438);
@@ -73,9 +73,9 @@ box(0,2.9,-1.29,2.7,.03,.11,0xffd76e);
 // Mesitas y sillas de los clientes, del otro lado del carrito.
 for(const x of [-2.55,2.55]){box(x,.75,-3.45,1.18,.09,.8,0xb52b25);box(x,.38,-3.45,.12,.72,.12,0x333333);
 for(const offset of [-.62,.62]){box(x+offset,.48,-3.65,.45,.08,.44,0xf3c737);box(x+offset,.78,-3.94,.45,.58,.08,0x25282b)}}
-box(0,.55,-.6,3.8,.95,1.3,0xc44e24);box(0,1.08,-.6,4,.12,1.5,0xbababa);
-for(const x of [-1.9,1.9])box(x,2,-.6,.09,2.1,.09,0x86532d);
-box(0,3.08,-.6,4.2,.18,1.9,0xe9a629);
+box(0,.55,-.6,6.2,.95,1.7,0x9da5a8);box(0,1.08,-.6,6.4,.12,1.9,0xc3cbd0);
+for(const x of [-3.05,3.05])box(x,2,-.6,.09,2.1,.09,0x929b9e);
+box(0,3.08,-.6,6.5,.18,2.4,0xb5bfc3);
 for(let i=0;i<9;i++)box(-1.8+i*.45,3.15,.25,.24,.09,.18,[0xd44d2d,0xf3c844,0x21894d][i%3]);
 box(-.75,1.19,-.6,1.12,.12,.95,0x292c30);box(-.75,1.26,-.6,1.02,.025,.85,0x42464a);disk(.72,1.2,-.6,.48,.08,0xe7d4b7);box(1.45,1.19,.7,.65,.06,.48,0xb77b42);
 for(const [x,color] of [[-1.65,0x914323],[-1.3,0x238a3b],[1.4,0xe4dfbb],[1.72,0xb52820]])disk(x,1.22,.04,.15,.18,color);
@@ -135,8 +135,8 @@ for(const spec of dispenserSpecs){
  const mount=box(x,1.76,-.84,.42,.15,.4,0x3e4145);
  const tube=disk(x,1.62,-.67,.14,.47,color);
  const nozzle=disk(x,1.34,-.67,.105,.09,0x33363a);
- const pushButton=box(x,1.29,.04,.51,.14,.38,0xf7e0b0);
- const buttonTop=box(x,1.38,.04,.4,.055,.29,color);
+ const pushButton=box(x,1.17,.12,.51,.06,.38,0x747c81);
+ const buttonTop=box(x,1.215,.12,.4,.035,.29,color);
  const tag=box(x,1.94,-.85,.7,.24,.12,0x782520);
  const labelCanvas=document.createElement('canvas');labelCanvas.width=256;labelCanvas.height=80;
  const ctx=labelCanvas.getContext('2d');ctx.fillStyle='#fff4dd';ctx.font='bold 30px Arial';ctx.textAlign='center';ctx.fillText(label,128,51);
@@ -149,8 +149,8 @@ renderer.domElement.addEventListener('pointerup',e=>{
  if(!playing||leaving)return;
  mouse.set(e.clientX/innerWidth*2-1,-e.clientY/innerHeight*2+1);
  raycaster.setFromCamera(mouse,camera);
- const hits=raycaster.intersectObjects(dispensers.flatMap(d=>[d.tube,d.nozzle,d.pushButton,d.buttonTop]));
- if(hits.length){const d=dispensers.find(v=>[v.tube,v.nozzle,v.pushButton,v.buttonTop].includes(hits[0].object));if(d)act(d.action)}
+ const hits=raycaster.intersectObjects(dispensers.flatMap(d=>[d.pushButton,d.buttonTop]));
+ if(hits.length){const d=dispensers.find(v=>[v.pushButton,v.buttonTop].includes(hits[0].object));if(d)act(d.action)}
 });
 const falling=[];
 function sprinkle(color,action){
@@ -166,7 +166,7 @@ function sprinkle(color,action){
   falling.push({mesh:p,targetY,targetX,targetZ,velocity:0,delay:Math.random()*.18,progress:0,startX:p.position.x,startZ:p.position.z});
  }
 }
-let flipped=false;let station=0;const stationTitle=document.querySelector('#stationTitle');const stationActions=[['heat','flip','move'],[],['chop'],['serve']];const stationNames=['1 · COMAL','2 · CARNE','3 · VERDURAS','4 · SALSA Y ENTREGA'];const stationViews=[[-.75,1.95,2.2],[.72,1.9,2.1],[1.42,1.9,2.3],[.72,1.9,2.1]];function setStation(n){station=Math.max(0,Math.min(3,n));stationTitle.textContent='Estación '+stationNames[station];document.querySelectorAll('[data-action]').forEach(b=>b.classList.toggle('station-active',stationActions[station].includes(b.dataset.action)));const v=stationViews[station];camera.position.set(v[0],v[1],v[2]);yaw=0;pitch=-.45;camera.rotation.set(pitch,yaw,0)}setStation(0);
+let flipped=false;let station=0;const stationTitle=document.querySelector('#stationTitle');const stationActions=[['heat','flip','move'],[],['chop'],['serve']];const stationNames=['1 · COMAL','2 · CARNE','3 · VERDURAS','4 · SALSA Y ENTREGA'];const stationViews=[[-.75,1.95,2.8],[.72,1.9,2.8],[1.42,1.9,2.8],[.72,1.9,2.8]];function setStation(n){station=Math.max(0,Math.min(3,n));stationTitle.textContent='Estación '+stationNames[station];document.querySelectorAll('[data-action]').forEach(b=>b.classList.toggle('station-active',stationActions[station].includes(b.dataset.action)));const v=stationViews[station];camera.position.set(v[0],v[1],v[2]);yaw=0;pitch=-.45;camera.rotation.set(pitch,yaw,0)}setStation(0);
 function act(action){
 if(!playing||leaving)return;
 if(action==='chop'){hands();onionStock+=1;chopVisual();tell('🔪 Cebolla picada. Porciones: '+onionStock);return}
