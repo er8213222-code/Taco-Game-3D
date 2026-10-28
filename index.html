@@ -26,7 +26,7 @@
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
 const scene=new THREE.Scene();scene.background=new THREE.Color(0xf1d7b2);
-const camera=new THREE.PerspectiveCamera(65,innerWidth/innerHeight,.1,100);camera.position.set(0,2.45,5.9);let yaw=0,pitch=-.28;camera.rotation.order='YXZ';camera.rotation.set(pitch,yaw,0);
+const camera=new THREE.PerspectiveCamera(65,innerWidth/innerHeight,.1,100);camera.position.set(0,2.05,4.1);let yaw=0,pitch=-.21;camera.rotation.order='YXZ';camera.rotation.set(pitch,yaw,0);
 const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);document.body.prepend(renderer.domElement);
 scene.add(new THREE.HemisphereLight(0xffffff,0x88603c,2.1));const light=new THREE.DirectionalLight(0xffffff,2);light.position.set(-3,7,4);scene.add(light);
 function box(x,y,z,w,h,d,color){const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshStandardMaterial({color}));o.position.set(x,y,z);scene.add(o);return o}
@@ -55,16 +55,16 @@ const tvFrame=box(3.45,2.55,-4.97,1.8,1.1,.16,0x17191e);
 const tvScreen=box(3.45,2.55,-4.86,1.63,.91,.035,0x080c12);
 box(3.45,1.96,-4.9,.14,.08,.14,0x292b30);
 window.tacoGameTV={screen:tvScreen,frame:tvFrame};
-const tvVideo=document.createElement('video');tvVideo.loop=true;tvVideo.playsInline=true;tvVideo.preload='metadata';tvVideo.crossOrigin='anonymous';tvVideo.muted=false;
+const tvVideo=document.createElement('video');tvVideo.loop=true;tvVideo.playsInline=true;tvVideo.preload='metadata';tvVideo.crossOrigin='anonymous';tvVideo.muted=true;
 const tvTexture=new THREE.VideoTexture(tvVideo);tvTexture.colorSpace=THREE.SRGBColorSpace;tvTexture.minFilter=THREE.LinearFilter;tvTexture.magFilter=THREE.LinearFilter;
 tvScreen.material=new THREE.MeshBasicMaterial({map:tvTexture,color:0xffffff,side:THREE.DoubleSide});
 let localVideoUrl=null;
-const tvFile=document.querySelector('#tvFile'),tvMute=document.querySelector('#tvMute');
+const tvFile=document.querySelector('#tvFile'),tvMute=document.querySelector('#tvMute');tvMute.textContent='🔇';
 tvFile.addEventListener('change',()=>{const file=tvFile.files&&tvFile.files[0];if(!file)return;if(localVideoUrl)URL.revokeObjectURL(localVideoUrl);localVideoUrl=URL.createObjectURL(file);tvVideo.src=localVideoUrl;tvVideo.play().catch(()=>{document.querySelector('#notice').textContent='Toca Jugar para activar el video de la televisión';});});
 tvMute.addEventListener('click',()=>{tvVideo.muted=!tvVideo.muted;tvMute.textContent=tvVideo.muted?'🔇':'🔊';if(tvVideo.paused)tvVideo.play().catch(()=>{})});
 tvScreen.rotation.y=0; // la cara frontal apunta hacia el jugador
 // Cuando se suba tv-taconazo.mp4 al repositorio se cargará automáticamente.
-fetch('./tv-taconazo.mp4',{method:'HEAD'}).then(r=>{if(r.ok&&!tvVideo.src){tvVideo.src='./tv-taconazo.mp4';tvVideo.muted=true;tvMute.textContent='🔇';if(playing)tvVideo.play().catch(()=>{})}}).catch(()=>{});
+fetch('./tv-taconazo.mp4',{method:'HEAD'}).then(r=>{if(r.ok&&!tvVideo.src){tvVideo.src='./tv-taconazo.mp4';tvVideo.muted=true;tvMute.textContent='🔇';tvVideo.play().catch(()=>{})}}).catch(()=>{});
 // Ventana del carrito y su estructura metálica.
 for(const x of [-2.05,2.05])box(x,2.15,-1.35,.12,2.4,.12,0x383c41);
 box(0,3.3,-1.35,4.3,.15,.16,0x303438);
@@ -177,7 +177,7 @@ function sprinkle(color,action){
   falling.push({mesh:p,targetY,targetX,targetZ,velocity:0,delay:Math.random()*.18,progress:0,startX:p.position.x,startZ:p.position.z});
  }
 }
-let flipped=false;let station=0;const stationTitle=document.querySelector('#stationTitle');const stationActions=[['heat','flip','move'],[],['chop'],['serve']];const stationNames=['1 · COMAL','2 · CARNE','3 · VERDURAS','4 · SALSA Y ENTREGA'];const stationViews=[[0,2.45,5.9],[0,2.45,5.9],[0,2.45,5.9],[0,2.45,5.9]];function setStation(n){station=Math.max(0,Math.min(3,n));stationTitle.textContent='Estación '+stationNames[station];document.querySelectorAll('[data-action]').forEach(b=>b.classList.toggle('station-active',stationActions[station].includes(b.dataset.action)));const v=stationViews[station];camera.position.set(v[0],v[1],v[2]);yaw=0;pitch=-.28;camera.rotation.set(pitch,yaw,0)}setStation(0);
+let flipped=false;let station=0;const stationTitle=document.querySelector('#stationTitle');const stationActions=[['heat','flip','move'],[],['chop'],[]];const stationNames=['1 · COMAL','2 · CARNE','3 · VERDURAS','4 · SALSA Y ENTREGA'];const stationViews=[[0,2.05,4.1],[0,2.05,4.1],[0,2.05,4.1],[0,2.05,4.1]];function setStation(n){station=Math.max(0,Math.min(3,n));stationTitle.textContent='Estación '+stationNames[station];document.querySelectorAll('[data-action]').forEach(b=>b.classList.toggle('station-active',false));const v=stationViews[station];camera.position.set(v[0],v[1],v[2]);yaw=0;pitch=-.21;camera.rotation.set(pitch,yaw,0)}setStation(0);
 function act(action){
 if(!playing||leaving)return;
 if(action==='chop'){hands();onionStock+=1;chopVisual();tell('🔪 Cebolla picada. Porciones: '+onionStock);return}
