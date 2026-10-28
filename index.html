@@ -135,24 +135,24 @@ for(const spec of dispenserSpecs){
  const mount=box(x,1.76,-.84,.42,.15,.4,0x3e4145);
  const tube=disk(x,1.62,-.67,.14,.47,color);
  const nozzle=disk(x,1.34,-.67,.105,.09,0x33363a);
- const pushButton=box(x,1.19,.48,.64,.10,.55,0x59656a);
- const buttonTop=box(x,1.26,.48,.54,.035,.45,color);
+ const pushButton=box(x,.66,.39,.64,.38,.12,0x59656a);
+ const buttonTop=box(x,.66,.465,.54,.30,.035,color);
  const tag=box(x,1.94,-.85,.7,.24,.12,0x782520);
  const labelCanvas=document.createElement('canvas');labelCanvas.width=256;labelCanvas.height=80;
  const ctx=labelCanvas.getContext('2d');ctx.fillStyle='#fff4dd';ctx.font='bold 30px Arial';ctx.textAlign='center';ctx.fillText(label,128,51);
  const sign=new THREE.Mesh(new THREE.PlaneGeometry(.64,.2),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(labelCanvas),transparent:true,side:THREE.DoubleSide}));
  sign.position.set(x,1.95,-.77);scene.add(sign);
- const buttonLabel=document.createElement('canvas');buttonLabel.width=256;buttonLabel.height=128;const bl=buttonLabel.getContext('2d');bl.fillStyle='#ffffff';bl.font='bold 32px Arial';bl.textAlign='center';bl.fillText(label,128,78);const plate=new THREE.Mesh(new THREE.PlaneGeometry(.5,.25),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(buttonLabel),transparent:true,side:THREE.DoubleSide}));plate.rotation.x=-Math.PI/2;plate.position.set(x,1.287,.48);scene.add(plate);dispensers.push({tube,nozzle,pushButton,buttonTop,plate,action,x});
+ const buttonLabel=document.createElement('canvas');buttonLabel.width=256;buttonLabel.height=128;const bl=buttonLabel.getContext('2d');bl.fillStyle='#ffffff';bl.font='bold 32px Arial';bl.textAlign='center';bl.fillText(label,128,78);const plate=new THREE.Mesh(new THREE.PlaneGeometry(.5,.25),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(buttonLabel),transparent:true,side:THREE.DoubleSide}));plate.position.set(x,.66,.49);scene.add(plate);dispensers.push({tube,nozzle,pushButton,buttonTop,plate,action,x});
 }
 // Botones de avance incrustados en el acero: navegación manual entre estaciones.
 const navButtons=[];
 for(const [x,label,step] of [[-2.55,'◀',-1],[2.55,'▶',1]]){
- const base=box(x,1.175,.25,.65,.07,.54,0x5a6266);
- const top=box(x,1.225,.25,.55,.035,.44,0xb22e26);
+ const base=box(x,.66,.39,.65,.38,.12,0x5a6266);
+ const top=box(x,.66,.465,.55,.30,.035,0xb22e26);
  const c=document.createElement('canvas');c.width=128;c.height=128;
  const g=c.getContext('2d');g.fillStyle='#ffffff';g.font='bold 84px Arial';g.textAlign='center';g.fillText(label,64,94);
  const glyph=new THREE.Mesh(new THREE.PlaneGeometry(.38,.3),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c),transparent:true,side:THREE.DoubleSide}));
- glyph.rotation.x=-Math.PI/2;glyph.position.set(x,1.248,.25);scene.add(glyph);
+ glyph.position.set(x,.66,.49);scene.add(glyph);
  navButtons.push({base,top,glyph,step});
 }
 const raycaster=new THREE.Raycaster(),mouse=new THREE.Vector2();
